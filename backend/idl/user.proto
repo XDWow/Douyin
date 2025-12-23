@@ -1,0 +1,71 @@
+syntax="proto3";
+
+package user;
+option go_package="/user";
+
+
+message User {
+    int64 userId = 1;
+    string email = 2;
+    string username = 3;
+    string avator = 4;
+}
+
+
+service UserService {
+    rpc Register(RegisterReq) returns (RegisterResp) {}
+    rpc Login(LoginReq) returns (LoginResp) {}
+    // 用户更新
+
+    rpc Update(UpdateUserReq) returns (UpdateUserResp) {}
+    rpc Delete(DeleteUserReq) returns (DeleteUserResp) {}
+    rpc Query(QueryUserReq) returns (QueryUserResp) {}
+}
+
+message RegisterReq {
+    string email = 1;
+    string password = 2;
+    string confirmPassword = 3;
+}
+
+message RegisterResp {
+    int32 userId = 1;
+}
+
+message LoginReq {
+    string email= 1;
+    string password = 2;
+}
+
+message LoginResp {
+    int64 userId = 1;
+    string username = 2;
+    string email = 3;
+}
+
+message UpdateUserReq {
+    int64 userId = 1;
+    string username = 2; 
+    string avator = 3;
+    string email = 4;
+}
+
+message UpdateUserResp {
+}
+
+message DeleteUserReq {
+    int64 userId = 1; 
+}
+
+message DeleteUserResp {
+    
+}
+
+
+message QueryUserReq {
+    int64 userId = 1;
+}
+
+message QueryUserResp {
+    User user = 1;
+}

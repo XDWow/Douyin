@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package checkout;
+
+import "payment.proto";
+
+option go_package = "/checkout";
+
+service CheckoutService {
+    rpc Checkout(CheckoutReq) returns (CheckoutResp) {}
+}
+
+message Address {
+    string street_address = 1;
+    string city = 2;
+    string state = 3;
+    string country = 4;
+    string zip_code = 5;
+}
+
+message CheckoutReq {
+    uint32 user_id = 1;
+    string firstname = 2;
+    string lastname = 3;
+    string email = 4;
+    string payment_method = 5; // 支付方式 card-银行卡 alipay-支付宝
+    Address address = 6;
+    payment.CreditCardInfo credit_card = 7;
+}
+
+message CheckoutResp {
+    string order_id = 1;
+    string transaction_id = 2;
+}

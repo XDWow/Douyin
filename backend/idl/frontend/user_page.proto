@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package frontend.user;
+
+
+import "api.proto";
+import "frontend/common.proto";
+
+option go_package = "frontend/user";
+
+enum Gender {
+    Unknown = 0;
+    Male    = 1;
+    Female  = 2;
+}
+
+message User {
+    int64 user_id = 1;
+    string email = 2;
+    string password = 3;
+    string signature = 4;
+    Gender gender = 5;
+    string nickname = 6;
+}
+
+
+message UpdateUserReq {
+    string username = 1;
+    string avator = 2;
+}
+
+message UpdateUserResp {
+    int32 status_code = 1 [(api.body) = "status_code"];
+    string msg = 2;
+}
+
+message QueryUserReq {
+}
+message QueryUserResp {
+
+}
+
+
+
+message DeleteUserReq {
+}
+
+message DeleteUserResp {
+}
+
+service UserService {
+    rpc update(UpdateUserReq) returns (UpdateUserResp) {
+        option (api.post) = "/user/update";
+    };
+    rpc queryUser(QueryUserReq) returns (common.Empty) {
+        option (api.get) = "/user/query";
+    }
+    rpc deleteUser(DeleteUserReq) returns (common.Empty) {
+        option (api.get) = "/user/delete";
+    }
+}
