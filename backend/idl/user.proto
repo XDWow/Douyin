@@ -1,35 +1,27 @@
 syntax="proto3";
 
-package user;
-option go_package="/user";
+package user.v1;
+option go_package="user/v1;userv1";
 
-
-message User {
-    int64 userId = 1;
-    string email = 2;
-    string username = 3;
-    string avator = 4;
-}
-
+import "google/protobuf/empty.proto";
 
 service UserService {
     rpc Register(RegisterReq) returns (RegisterResp) {}
     rpc Login(LoginReq) returns (LoginResp) {}
-    // 用户更新
+    rpc Logout(google.protobuf.Empty) returns (google.protobuf.Empty) {}
 
-    rpc Update(UpdateUserReq) returns (UpdateUserResp) {}
-    rpc Delete(DeleteUserReq) returns (DeleteUserResp) {}
+    rpc Update(UpdateUserReq) returns (google.protobuf.Empty) {}
+    rpc Delete(DeleteUserReq) returns (google.protobuf.Empty) {}
     rpc Query(QueryUserReq) returns (QueryUserResp) {}
 }
 
 message RegisterReq {
     string email = 1;
     string password = 2;
-    string confirmPassword = 3;
 }
 
 message RegisterResp {
-    int32 userId = 1;
+    int32 user_id = 1;
 }
 
 message LoginReq {
@@ -38,34 +30,34 @@ message LoginReq {
 }
 
 message LoginResp {
-    int64 userId = 1;
+    int64 user_id = 1;
     string username = 2;
     string email = 3;
 }
 
 message UpdateUserReq {
-    int64 userId = 1;
-    string username = 2; 
-    string avator = 3;
-    string email = 4;
-}
+    int64 user_id = 1;
 
-message UpdateUserResp {
+    optional string username = 2;
+    optional string avatar = 3;
+    optional string email = 4;
 }
 
 message DeleteUserReq {
-    int64 userId = 1; 
+    int64 user_id = 1;
 }
-
-message DeleteUserResp {
-    
-}
-
 
 message QueryUserReq {
-    int64 userId = 1;
+    int64 user_id = 1;
 }
 
 message QueryUserResp {
     User user = 1;
+}
+
+message User {
+    int64 user_id = 1;
+    string email = 2;
+    string username = 3;
+    string avatar = 4;
 }
